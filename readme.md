@@ -24,7 +24,7 @@
     Parameters,
 
     C:\>iprotofetch --help
-## Please Report Any Bugs Or Security Issues Here
+## For Bug Reports, Security Fixes or, To Gain Access To Open Source Code Please Reach Me Through My Discord ".saaimm"
 <a href="https://discord.gg/ARMCCCMZpU">
      <img src="https://img.shields.io/badge/.saaimm-purple?style=for-the-badge&logo=discord&logoColor=white" alt="LinkedIn Badge"/>
   </a>
