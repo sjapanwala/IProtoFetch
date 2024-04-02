@@ -80,7 +80,10 @@ echo.
 echo ******************************************************
 echo.
 echo [%brightpurple%1%brightwhite%] Generate IP's
-echo [%brightpurple%2%brightwhite%] Change Output File [Current File: %filename%]
+echo [%brightpurple%2%brightwhite%] Change Output File
+echo └─[Current File: %filename%]
+echo   └─[%brightpurple%2-1%brightwhite%] Launch %filename%
+echo   └─[%brightpurple%2-2%brightwhite%] Wipe %filename%
 echo [%brightpurple%3%brightwhite%] Information
 echo.
 echo [%brightpurple%0%brightwhite%] Exit Program
@@ -88,6 +91,8 @@ set /p choice=└─〉
 if %choice%==1 goto generateip
 if %choice%==2 goto outputfile
 if %choice%==3 goto settings
+if %choice%==2-1 start %filename% && goto line
+if %choice%==2-2 goto wipefileconfirm
 if %choice%==0 goto exitprog
 goto line
 
@@ -99,6 +104,19 @@ if %filename%==? (
 )
 title IProtoFetch │ Generating IP's
 cls
+echo %white%NOTE: Larger Range = Less IP's Detected.
+set /p range=[%brightpurple%?%brightwhite%] Please Set A Range (%brightyellow% Greater Than 0, Less Than 10%brightwhite% ): 
+if not %range% lss 10 (
+    echo [%brightpurple%!%brightwhite%] Out Of Range.
+    pause>nul
+    goto generateip
+)
+if not %range% gtr 0 (
+    echo [%brightpurple%!%brightwhite%] Out Of Range.
+    pause>nul
+    goto generateip
+)
+echo [%brightpurple%*%brightwhite%] Range Set To [0-%range%)
 set /p counter=[%brightpurple%?%brightwhite%] How Many IP's To Search?: 
 if %counter%==0 goto line
 if %counter% gtr 40 (
@@ -106,6 +124,7 @@ if %counter% gtr 40 (
     pause>nul
     goto generateip
 )
+echo [%brightpurple%*%brightwhite%] IP's To Search [%counter%]
 set /p "addcode=[%brightpurple%?%brightwhite%]Add Any Params? (leave blank if none):"
 echo.
 echo [%brightpurple%*%brightwhite%]Starting Search in 3
@@ -123,7 +142,7 @@ set failedip=0
 :startloop
 ::if exist C:\Users\%username%\.config\iprotosettings\2secs.settings timeout 2 >nul
 if %lookcount%==%counter% goto finished
-set /a num=%random% %%4
+set /a num=%random% %%%range%
 set /a num1=%random% %%4
 set /a num2=%random% %%4
 set /a num3=%random% %%4
@@ -136,10 +155,26 @@ set /a num9=%random% %%4
 set /a num10=%random% %%4
 set /a num11=%random% %%4
 :: precision algo
-if %num%==0 goto startloop
-if %num3%==0 goto startloop
-if %num6%==0 goto startloop
-if %num9%==0 goto startloop
+if %num%==0 (
+    set num=
+    if %num1%==0 set num1=
+    if %num2%==0 goto startloop
+)
+if %num3%==0 (
+    set num3=
+    if %num4%==0 set num4=
+    if %num5%==0 goto startloop
+)
+if %num6%==0 (
+    set num6=
+    if %num7%==0 set num7=
+    if %num8%==0 goto startloop
+)
+if %num9%==0 (
+    set num9=
+    if %num10%==0 set num10=
+    if %num11%==0 goto startloop
+)
 set generatedip=%num%%num1%%num2%.%num3%%num4%%num5%.%num6%%num7%%num8%.%num9%%num10%%num11%
 for /f "tokens=*" %%i in ('curl -s "http://ip-api.com/line/%generatedip%?fields=status"') do set status=%%i
 if %status%==fail (
@@ -239,6 +274,16 @@ echo %brightgreen%https://github.com/sjapanwala/IProtoFetch%brightwhite%
 echo.
 pause>nul
 goto line
+
+:wipefileconfirm
+echo.
+set /p delfileconfim= [%brightpurple%?%brightwhite%] Are You Sure You Want To Delete %filename%?: 
+if %delfileconfim%==Y del %filename% && goto line
+if %delfileconfim%==y del %filename% && goto line
+if %delfileconfim%==N goto line
+if %delfileconfim%==n goto line
+goto line
+
 
 :exitprog
 
