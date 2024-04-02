@@ -12,7 +12,10 @@
 
 ## What Is *IP*rotoFetch
 ### 
-    IProtoFetch is a powerful batch script designed to streamline the process of generating and testing IP  addresses. This innovative tool automates the search for viable IP addresses by systematically scanning  and testing them until a successful connection is established. Whether you're a network administrator,   cybersecurity professional, or simply someone in need of reliable IP address testing, IProtoFetch offers  a convenient and efficient solution.
+    IProtoFetch is a powerful batch script designed to streamline the process of generating and testing IP  addresses. 
+    This innovative tool automates the search for viable IP addresses by systematically scanning  and testing them until a successful connection is established.
+    Whether you're a network administrator,   cybersecurity professional, or simply someone in need of reliable IP address testing, IProtoFetch offers  a convenient
+    and efficient solution.
 
 ## Features
     Automated IP Address Generation: Quickly generate and test IP addresses with ease.
