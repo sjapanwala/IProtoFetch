@@ -1,21 +1,23 @@
 @echo off
 chcp 65001>nul
+setlocal enabledelayedexpansion
 title IProtoFetch │ In The Menu
 :: -- color imports --
-set "brightred=[40;91m"
-set "brightyellow=[40;93m"
-set "brightgreen=[40;92m"
-set "brightblue=[40;94m"
-set "brightpurple=[40;95m"
-set "brightcyan=[40;96m"
-set "brightwhite=[40;97m"
-set "darkred=[40;31m"
-set "darkyellow=[40;33m"
-set "darkgreen=[40;32m"
-set "darkblue=[40;34m"
-set "darkpurple=[40;35m"
-set "darkcyan=[40;36m"
-set "white=[40;37m"
+set "brightred=[91m"
+set "brightyellow=[93m"
+set "brightgreen=[92m"
+set "brightblue=[94m"
+set "brightpurple=[95m"
+set "brightcyan=[96m"
+set "brightwhite=[97m"
+set "darkred=[31m"
+set "darkyellow=[33m"
+set "darkgreen=[32m"
+set "[34m=[34m"
+set "darkpurple=[35m"
+set "darkcyan=[36m"
+set "white=[37m"
+set "grey=[90m"
 set currentfilename=%~n0%~x0
 set sessioncode=%random%
 FOR /F %%a IN ('curl -s https://ipv4.icanhazip.com/') DO set localip=%%a
@@ -23,13 +25,13 @@ FOR /F %%a IN ('curl -s https://ipv4.icanhazip.com/') DO set localip=%%a
 if "%1"=="--info" (
     echo.
     echo Prefix Information
-    echo [%brightpurple%1%brightwhite%] - Choice
-    echo [%brightpurple%!%brightwhite%] - Alert
-    echo [%brightpurple%?%brightwhite%] - Question/Text Box
-    echo [%brightpurple%*%brightwhite%] - Statement
-    echo [%brightpurple%+%brightwhite%] - Information
-    echo [%brightpurple%X%brightwhite%] - Incorrect / Fail
-    echo [%brightpurple%✓%brightwhite%] - Correct / Success
+    echo [[95m1[97m] - Choice
+    echo [[95m![97m] - Alert
+    echo [[95m?[97m] - Question/Text Box
+    echo [[95m*[97m] - Statement
+    echo [[95m+[97m] - Information
+    echo [[95mX[97m] - Incorrect / Fail
+    echo [[95m✓[97m] - Correct / Success
     echo.
     goto exitprog
 )
@@ -44,7 +46,7 @@ if "%1"=="--help" (
     echo Welcome To IProtoFetch, An Internet Protocal Adddress Generator.
     echo Scanning IP Addresses until a successful on is found and relayed to the user.
     echo.
-    echo Read More @%brightgreen%https://github.com/sjapanwala/IProtoFetch%brightwhite%
+    echo Read More @[1;92m%https://github.com/sjapanwala/IProtoFetch[97m
     echo.
     goto exitprog
 )
@@ -71,23 +73,24 @@ set filetype=?
 :line
 cls
 echo.
-echo  %brightcyan% ___ ____            _        _____    _       _     
-echo  %brightcyan%│_ _│  _ \ _ __ ___ │ │_ ___ │  ___│__│ │_ ___│ │__  
-echo  %brightblue% │ ││ │_) │ '__/ _ \│ __/ _ \│ │_ / _ \ __/ __│ '_ \ 
-echo  %darkblue% │ ││  __/│ │ │ (_) │ ││ (_) │  _│  __/ ││ (__│ │ │ │
-echo  %darkpurple%│___│_│   │_│  \___/ \__\___/│_│  \___│\__\___│_│ │_│%brightwhite%
+echo  [96m ___ ____            _        _____    _       _     
+echo  [96m│_ _│  _ \ _ __ ___ │ │_ ___ │  ___│__│ │_ ___│ │__  
+echo  [94m │ ││ │_) │ '__/ _ \│ __/ _ \│ │_ / _ \ __/ __│ '_ \ 
+echo  [34m │ ││  __/│ │ │ (_) │ ││ (_) │  _│  __/ ││ (__│ │ │ │
+echo  [35m│___│_│   │_│  \___/ \__\___/│_│  \___│\__\___│_│ │_│[97m                                                 
 echo.
 echo ******************************************************
 echo.
-echo [%brightpurple%1%brightwhite%] Generate IP's
-echo [%brightpurple%2%brightwhite%] Change Output File
+echo [[95m1[97m] Generate IP's
+echo [[95m2[97m] Change Output File
 echo └─[Current File: %filename%]
-echo   └─[%brightpurple%2-1%brightwhite%] Launch %filename%
-echo   └─[%brightpurple%2-2%brightwhite%] Wipe %filename%
-echo [%brightpurple%3%brightwhite%] Information
+echo   └─[[95m2-1[97m] Launch %filename%
+echo   └─[[95m2-2[97m] Wipe %filename%
+echo [[95m3[97m] Information
 echo.
-echo [%brightpurple%0%brightwhite%] Exit Program
+echo [[95m0[97m] Exit Program
 set /p choice=└─〉
+echo.
 if %choice%==1 goto generateip
 if %choice%==2 goto outputfile
 if %choice%==3 goto settings
@@ -98,40 +101,40 @@ goto line
 
 :generateip
 if %filename%==? (
-    echo [%brightpurple%!%brightwhite%] Please Set An Output File
+    echo [[95m![97m] Please Set An Output File
     pause>nul
     goto line
 )
 title IProtoFetch │ Generating IP's
 cls
-echo %white%NOTE: Larger Range = Less IP's Detected.
-set /p range=[%brightpurple%?%brightwhite%] Please Set A Range (%brightyellow% Greater Than 0, Less Than 10%brightwhite% ): 
+echo [90mNOTE: Larger Range = Less IP's Detected.
+set /p range=[[95m?[97m] Please Set A Range ( [93mGreater Than 0, Less Than 10[97m ): 
 if not %range% lss 10 (
-    echo [%brightpurple%!%brightwhite%] Out Of Range.
+    echo [[95m![97m] Out Of Range.
     pause>nul
     goto generateip
 )
 if not %range% gtr 0 (
-    echo [%brightpurple%!%brightwhite%] Out Of Range.
+    echo [[95m![97m] Out Of Range.
     pause>nul
     goto generateip
 )
-echo [%brightpurple%*%brightwhite%] Range Set To [0-%range%)
-set /p counter=[%brightpurple%?%brightwhite%] How Many IP's To Search?: 
+echo [[95m*[97m] Range Set To [0-%range%)
+set /p counter=[[95m?[97m] How Many IP's To Search?: 
 if %counter%==0 goto line
 if %counter% gtr 40 (
-    echo [%brightpurple%!%brightwhite%] Search Rate Is Limited To Less Than 40, Please Purchase Premium For Larger Search Rate
+    echo [[95m![97m] Search Rate Is Limited To Less Than 40, Please Purchase Premium For Larger Search Rate
     pause>nul
     goto generateip
 )
-echo [%brightpurple%*%brightwhite%] IP's To Search [%counter%]
-set /p "addcode=[%brightpurple%?%brightwhite%]Add Any Params? (leave blank if none):"
+echo [[95m*[97m] IP's To Search [%counter%]
+set /p "addcode=[[95m?[97m]Add Any Params? (leave blank if none):"
 echo.
-echo [%brightpurple%*%brightwhite%]Starting Search in 3
+echo [[95m*[97m]Starting Search in 3
 timeout 1 >nul
-echo [%brightpurple%*%brightwhite%]Starting Search in 2
+echo [[95m*[97m]Starting Search in 2
 timeout 1 >nul
-echo [%brightpurple%*%brightwhite%]Starting Search in 1
+echo [[95m*[97m]Starting Search in 1
 echo.
 echo STATUS │ IP Address
 echo ───────┼────────────────
@@ -176,9 +179,11 @@ if %num9%==0 (
     if %num11%==0 goto startloop
 )
 set generatedip=%num%%num1%%num2%.%num3%%num4%%num5%.%num6%%num7%%num8%.%num9%%num10%%num11%
+set "padded_number=0%lookcount%"
+set "padded_number=!padded_number:~-2!"
 for /f "tokens=*" %%i in ('curl -s "http://ip-api.com/line/%generatedip%?fields=status"') do set status=%%i
 if %status%==fail (
-    echo [%brightred%X%brightwhite%]    │ %generatedip%
+    echo [90m%padded_number% [97m[[1;91mX[97m] │ %generatedip%
     if %filetype%==.txt (
         echo ❌ │ %generatedip%>>%filename%
     )
@@ -186,7 +191,7 @@ if %status%==fail (
     set /a lookcount+=1
 ) 
 if %status%==success (
-    echo [%brightgreen%✓%brightwhite%]    │ %generatedip%
+    echo [90m%padded_number% [97m[[1;92m✓[97m] │ %generatedip%
     if %filetype%==.txt (
         echo ✅ │ %generatedip% >>%filename%
     )
@@ -207,14 +212,14 @@ set /a percentgood=%probgoodip% * 100
 set /a percentbad=%probbadip% * 100
 
 echo.
-echo ═══════Statistics═══════
-echo [%brightpurple%!%brightwhite%]Search Finished,
-echo [%brightpurple%*%brightwhite%] IP's Searched:   %lookcount%
-echo [%brightpurple%*%brightwhite%] Successful IP's: %successfulip%
-echo [%brightpurple%*%brightwhite%] Failed IP's:     %failedip%
+echo ════════Statistics══════
+echo [[95m![97m]Search Finished,
+echo [[95m*[97m] IP's Searched:   %lookcount%
+echo [[95m*[97m] Successful IP's: %successfulip%
+echo [[95m*[97m] Failed IP's:     %failedip%
 echo ════════════════════════
 echo.
-echo [%brightpurple%✓%brightwhite%] Data Successfully Exported to %filename%
+echo [[95m✓[97m] Data Successfully Exported to %filename%
 echo.
 pause>nul
 goto line
@@ -222,29 +227,29 @@ goto line
 :outputfile
 title IProtoFetch │ Setting An Output File
 echo.
-echo [%brightpurple%+%brightwhite%] Current Output File Name: %filename%
-echo [%brightpurple%+%brightwhite%] Current Output File Type: %filetype%
+echo [[95m+[97m] Current Output File Name: %filename%
+echo [[95m+[97m] Current Output File Type: %filetype%
 echo.
 echo Please Choose A File Type:
 echo.
 :choosefiletype
-echo [%brightpurple%1%brightwhite%] Text File (.txt)
-echo [%brightpurple%2%brightwhite%] Netwise Readible File (.nrf)
+echo [[95m1[97m] Text File (.txt)
+echo [[95m2[97m] Netwise Readible File (.nrf)
 set /p filetypechoice=└─〉 
 if %filetypechoice%==1 set filetype=.txt && goto namefile
 if %filetypechoice%==2 set filetype=.nrf && goto namefile
 if %filetypechoice%==0 goto line
 echo.
-echo [%brightpurple%!%brightwhite%] Please Choose A Valid Option
+echo [[95m![97m] Please Choose A Valid Option
 echo.
 goto choosefiletype
 
 :namefile
 echo.
-echo [%brightpurple%+%brightwhite%] Current Output File Name: %filename%
-echo [%brightpurple%+%brightwhite%] Current Output File Type: %filetype%
+echo [[95m+[97m] Current Output File Name: %filename%
+echo [[95m+[97m] Current Output File Type: %filetype%
 echo.
-echo [%brightpurple%*%brightwhite%]This file Will Be Saved in (%cd%)
+echo [[95m*[97m]This file Will Be Saved in (%cd%)
 echo.
 echo Please Choose A Name For The File:
 set filenumber=1
@@ -263,21 +268,21 @@ goto line
 
 :settings
 echo.
-echo [%brightpurple%*%brightwhite%] Version:           2024.01
-echo [%brightpurple%*%brightwhite%] Subscription Type: Free
-echo [%brightpurple%*%brightwhite%] Session Code:      %sessioncode%
-echo [%brightpurple%*%brightwhite%] Personal IP:       %localip%
-echo [%brightpurple%*%brightwhite%] Current File:      %currentfilename%
-echo [%brightpurple%*%brightwhite%] Current Directory: %cd%
+echo [[95m*[97m] Version:           2024.01
+echo [[95m*[97m] Subscription Type: Free
+echo [[95m*[97m] Session Code:      %sessioncode%
+echo [[95m*[97m] Personal IP:       %localip%
+echo [[95m*[97m] Current File:      %currentfilename%
+echo [[95m*[97m] Current Directory: %cd%
 echo.
-echo %brightgreen%https://github.com/sjapanwala/IProtoFetch%brightwhite%
+echo [1;92m%https://github.com/sjapanwala/IProtoFetch[97m
 echo.
 pause>nul
 goto line
 
 :wipefileconfirm
 echo.
-set /p delfileconfim= [%brightpurple%?%brightwhite%] Are You Sure You Want To Delete %filename%?: 
+set /p delfileconfim= [[95m?[97m] Are You Sure You Want To Delete %filename%?: 
 if %delfileconfim%==Y del %filename% && goto line
 if %delfileconfim%==y del %filename% && goto line
 if %delfileconfim%==N goto line
